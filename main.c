@@ -1,39 +1,66 @@
 #include <stdint.h>
 #include <pic32mx.h>
 
-
+int running = 0;
 
 int main(void) {
-<<<<<<< HEAD
-
-=======
 	
-	int running = 0;
+	/*
+	  This will set the peripheral bus clock to the same frequency
+	  as the sysclock. That means 80 MHz, when the microcontroller
+	  is running at 80 MHz. Changed 2017, as recommended by Axel.
+	*/
 	
->>>>>>> 4592b5f5cafd060301cd6b62d7d64cd9f1ac1ce2
-	/* Set up peripheral bus clock */
-	/* Sätter klockan till 80 Mhz*/
-	OSCCON &= ~0x180000;
-	OSCCON |= 0x080000;
-
-	/* Set button 2-4 to input */
-	TRISD |= (3 << 5);
-
-	/* Set LEDS to output */
-	TRISE &= ~0xFF;
-<<<<<<< HEAD
-
-
-=======
+	SYSKEY = 0xAA996655;  /* Unlock OSCCON, step 1 */
+	SYSKEY = 0x556699AA;  /* Unlock OSCCON, step 2 */
+	while(OSCCON & (1 << 21)); /* Wait until PBDIV ready */
+	OSCCONCLR = 0x180000; /* clear PBDIV bit <0,1> */
+	while(OSCCON & (1 << 21));  /* Wait until PBDIV ready */
+	SYSKEY = 0x0;  /* Lock OSCCON */
 	
-	/* Pointless comment */
+	/* Set up output pins */
+	AD1PCFG = 0xFFFF;
+	ODCE = 0x0;
+	TRISECLR = 0xFF;
+	PORTE = 0x0;
+	
+	/* Output pins for display signals */
+	PORTF = 0xFFFF;
+	PORTG = (1 << 9);
+	ODCF = 0x0;
+	ODCG = 0x0;
+	TRISFCLR = 0x70;
+	TRISGCLR = 0x200;
+	
+	/* Set up input pins */
+	TRISDSET = (1 << 8);
+	TRISFSET = (1 << 1);
+	
+	/* Set up SPI as master */
+	SPI2CON = 0;
+	SPI2BRG = 4;
+	/* SPI2STAT bit SPIROV = 0; */
+	SPI2STATCLR = 0x40;
+	/* SPI2CON bit CKP = 1; */
+    SPI2CONSET = 0x40;
+	/* SPI2CON bit MSTEN = 1; */
+	SPI2CONSET = 0x20;
+	/* SPI2CON bit ON = 1; */
+	SPI2CONSET = 0x8000;
 	
 	
 	
-	initGame();
-	running = 1;
+	while(1){
+		
+		initGame();
+		
+		while(running){
+			
+			
+			
+			
+		}
+		
+		
 	
-	
-	
->>>>>>> 4592b5f5cafd060301cd6b62d7d64cd9f1ac1ce2
 }
