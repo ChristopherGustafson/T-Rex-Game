@@ -1,7 +1,11 @@
 #include <stdint.h>
 #include <pic32mx.h>
 
+
+
 int main(void) {
+	
+	int running = 0;
 	
 	/* Set up peripheral bus clock */
 	OSCCON &= ~0x180000;
@@ -12,6 +16,14 @@ int main(void) {
 	
 	/* Set LEDS to output */
 	TRISE &= ~0xFF;
+	
+	/* Pointless comment */
+	
+	
+	
+	initGame();
+	running = 1;
+	
 	
 	
 }
