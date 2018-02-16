@@ -17,7 +17,7 @@ int main(void) {
 	OSCCONCLR = 0x180000; /* clear PBDIV bit <0,1> */
 	while(OSCCON & (1 << 21));  /* Wait until PBDIV ready */
 	SYSKEY = 0x0;  /* Lock OSCCON */
-	
+
 	/* Set up output pins */
 	AD1PCFG = 0xFFFF;
 	ODCE = 0x0;
