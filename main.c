@@ -60,14 +60,14 @@ int main(void) {
 	display_image(96, dark);
 	
 	int i;
-	for(i = 0; i < 100000000; i++){
+	for(i = 0; i < 128; i++){
 		display_image(0, dark);
 		display_image(32, dark);
 		display_image(64, dark);
 		display_image(96, dark);
 		
-		spi_send_recv(0xff);
-		delay(10000);
+		display_image(i, dino);
+		delay(100000);
 		
 	}
 	

@@ -26,6 +26,7 @@ extern const uint8_t const font[128*8];
 extern char textbuffer[4][16];
 
 extern const uint8_t const dark[128];
-
+extern const uint8_t const dino[128];
+extern const uint8_t const dot[1];
 /* Declare global variables */
 extern int running;
