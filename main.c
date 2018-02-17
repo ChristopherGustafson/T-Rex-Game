@@ -1,7 +1,12 @@
 #include <stdint.h>
 #include <pic32mx.h>
+#include "game.h"
 
-int running = 0;
+void delay(int a){
+	int i;
+	for(i = 0; i < a; i++){
+	}
+}
 
 int main(void) {
 	
@@ -49,10 +54,28 @@ int main(void) {
 	SPI2CONSET = 0x8000;
 	
 	display_init();
+	display_image(0, dark);
+	display_image(32, dark);
+	display_image(64, dark);
+	display_image(96, dark);
+	
+	int i;
+	for(i = 0; i < 128; i++){
+		display_image(0, dark);
+		display_image(32, dark);
+		display_image(64, dark);
+		display_image(96, dark);
+		
+		display_image(i, dino);
+		delay(100000);
+		
+	}
+	
 	
 	while(1){
 		
-		initGame();
+		//initGame();
+		int running = 1;
 		
 		while(running){
 			
