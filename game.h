@@ -1,4 +1,5 @@
 /* Declare display-related functions from display_functions.c */
+void display();
 void display_image(int x, const uint8_t *data);
 void display_init(void);
 void display_string(int line, char *s);
@@ -28,5 +29,3 @@ extern char textbuffer[4][16];
 extern const uint8_t const dark[128];
 extern const uint8_t const dino[128];
 extern const uint8_t const dot[1];
-/* Declare global variables */
-extern int running;
