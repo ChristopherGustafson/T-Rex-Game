@@ -16,11 +16,22 @@ int renderCount;
 int gameSpeed;
 int dinoX;
 int dinoY;
+int hopp;
 int cactusX;
-uint8_t mini[] = {0x08, 0x30, 0x20, 0xf0, 0xb8, 0x1c, 0x0f, 0x13 };
+int jump;
+int fall;
+int col1;
+int col2;
+int cac;
+uint8_t mini[] = {0x08, 0x30, 0x20, 0xf0, 0xb8, 0x1c, 0x0f, 0x13};
 uint8_t ground[] = {0x05, 0x05, 0x09, 0x01, 0x09, 0x05};
 uint8_t cactus[] = {0x1c, 0x10, 0xfc, 0x10, 0x1c};
 void initGame(void){
+	cac = 0;
+	col1 = 0;
+	col2 = 0;
+	fall = 0;
+	jump = 0;
 	dinoY = 0;
 	dinoX = 20;
 	gameSpeed = 1;
@@ -29,7 +40,9 @@ void initGame(void){
 	renderCount = 127;
 }
 
-void tick(void){
+void tick(void)
+{
+
 }
 
 void render(void){
@@ -40,25 +53,97 @@ void render(void){
 		for(col = 0; col < 128; col++){
 
 			//Draw dino
-			if(page == 2 && col == dinoX){
-				for(t = 0; t < 8; t++){
+			if((page == 2) && (col == dinoX) && (!jump))
+			{
+				for(t = 0; t < 8; t++)
+				{
 					spi_send_recv(mini[t]);
 				}
 				col += 7;
 			}
+
+			//Make dino jump
+			else if(((PORTD >> 7) || jump) && (page == 1) && (col == dinoX))
+			{
+				delay(1000);
+				//Stops standard printing of dino
+				jump = 1;
+
+				//Dino written to first page
+				for(col1 = 0; col1 < 8; col1++)
+				{
+					spi_send_recv(mini[col1] << (7 - dinoY));
+				}
+				col += 7;
+			}
+
+			else if(jump && (page == 2) && (col == dinoX))
+				{
+					delay(1000);
+					//Dino written to second page
+					for(col2 = 0; col2 < 8; col2++)
+					{
+						spi_send_recv(mini[col2] >> (1 + dinoY));
+					}
+					col += 7;
+					//Max height reached, tell dino to start falling
+					if(dinoY == 7)
+					{
+						fall = 1;
+					}
+					//If max height has not been reached, dino will keep rising
+					if(!fall)
+					{
+						dinoY++;
+					}
+					//If max height has been reached, dino will start falling
+					if(fall)
+					{
+						dinoY--;
+					}
+					//When dinoY is 0 again jump is done
+					if(!dinoY)
+					{
+						jump = 0;
+						fall = 0;
+					}
+				}
+				/*
+			else if(page == 2)
+			{
+				if(col < renderCount+5 && col > renderCount-5)
+				for(cac = 0; cac < 5; cac++)
+				{
+										spi_send_recv(cactus);
+				}
+
+				else if(col < renderCount+40 && col > renderCount+35)
+					spi_send_recv(0x19);
+				else
+					spi_send_recv(0x1);
+			}
+			*/
 			// Draw ground
-			else if(page == 3){
+			else if(page == 3)
+			{
+				delay(500);
 				if(col < renderCount+5 && col > renderCount-5)
 					spi_send_recv(0x25);
 				else if(col < renderCount+40 && col > renderCount+35)
 					spi_send_recv(0x19);
 				else
-					spi_send_recv(0x01);
+					spi_send_recv(0x1);
+			}
+			else if((PORTD >> 6) & 0x1)
+			{
+				main();
 			}
 			// If nothing is drawn, draw black
-			else{
+			else
+			{
 				spi_send_recv(0x00);
 			}
+
 		}
 	}
 
@@ -67,7 +152,7 @@ void render(void){
 	else
 		renderCount--;
 
-		
+
 
 
 }
@@ -105,13 +190,15 @@ int main(void) {
 	TRISDSET = (1 << 8);
 	TRISFSET = (1 << 1);
 
+
+
 	/* Set up SPI as master */
 	SPI2CON = 0;
 	SPI2BRG = 4;
 	/* SPI2STAT bit SPIROV = 0; */
 	SPI2STATCLR = 0x40;
 	/* SPI2CON bit CKP = 1; */
-    SPI2CONSET = 0x40;
+  SPI2CONSET = 0x40;
 	/* SPI2CON bit MSTEN = 1; */
 	SPI2CONSET = 0x20;
 	/* SPI2CON bit ON = 1; */
@@ -122,6 +209,9 @@ int main(void) {
 	T2CON |= (0x3 << 4);
 	PR2 = 31250;
 	T2CON |= 0x8000;
+
+	//input
+
 
 	display_init();
 
