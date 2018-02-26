@@ -3,6 +3,7 @@
 #include <pic32mx.h>
 #include "game.h"
 
+struct gameObject dino;
 
 void delay(int a){
 	int i;
@@ -15,26 +16,18 @@ int running;
 int renderCount;
 int gameSpeed;
 
-int dinoX;
-int dinoY;
-
-
 int cactusX;
 uint8_t mini[] = {0x08, 0x30, 0x20, 0xf0, 0xb8, 0x1c, 0x0f, 0x13 };
 uint8_t ground[] = {0x05, 0x05, 0x09, 0x01, 0x09, 0x05};
 uint8_t cactus[] = {0x1c, 0x10, 0xfc, 0x10, 0x1c};
 
 void initGame(void){
-	dinoY = 0;
-	dinoX = 20;
 	gameSpeed = 1;
 	running = 1;
 	cactusX = 125;
 	renderCount = 127;
-
-	gameObject dino = {10, 10};
-	dino.x = 10;
-
+	dino.x = 20;
+	dino.y = 0;
 }
 
 void tick(void){
