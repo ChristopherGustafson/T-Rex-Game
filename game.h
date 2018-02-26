@@ -20,4 +20,4 @@ extern const uint8_t const dot[1];
 typedef struct gameObject{
   int x;
   int y;
-}gameObject;
+} gameObject;

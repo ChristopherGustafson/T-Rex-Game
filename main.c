@@ -34,6 +34,7 @@ void initGame(void){
 
 	gameObject dino = {10, 10};
 	dino.x = 10;
+
 }
 
 void tick(void){
@@ -47,7 +48,7 @@ void render(void){
 		for(col = 0; col < 128; col++){
 
 			//Draw dino
-			if(page == 2 && col == d.x){
+			if(page == 2 && col == dino.x){
 				for(t = 0; t < 8; t++){
 					spi_send_recv(mini[t]);
 				}
