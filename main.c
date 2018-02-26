@@ -10,16 +10,20 @@ void delay(int a){
 	}
 }
 
-/* Global variables */
+
 int running;
 int renderCount;
 int gameSpeed;
+
 int dinoX;
 int dinoY;
+
+
 int cactusX;
 uint8_t mini[] = {0x08, 0x30, 0x20, 0xf0, 0xb8, 0x1c, 0x0f, 0x13 };
 uint8_t ground[] = {0x05, 0x05, 0x09, 0x01, 0x09, 0x05};
 uint8_t cactus[] = {0x1c, 0x10, 0xfc, 0x10, 0x1c};
+
 void initGame(void){
 	dinoY = 0;
 	dinoX = 20;
@@ -27,6 +31,9 @@ void initGame(void){
 	running = 1;
 	cactusX = 125;
 	renderCount = 127;
+
+	gameObject dino = {10, 10};
+	dino.x = 10;
 }
 
 void tick(void){
@@ -40,7 +47,7 @@ void render(void){
 		for(col = 0; col < 128; col++){
 
 			//Draw dino
-			if(page == 2 && col == dinoX){
+			if(page == 2 && col == d.x){
 				for(t = 0; t < 8; t++){
 					spi_send_recv(mini[t]);
 				}
@@ -67,18 +74,18 @@ void render(void){
 	else
 		renderCount--;
 
-		
+}
+
+void renderStartScreen(void){
+
+
 
 
 }
 
 int main(void) {
 
-	/*
-	  This will set the peripheral bus clock to the same frequency
-	  as the sysclock. That means 80 MHz, when the microcontroller
-	  is running at 80 MHz. Changed 2017, as recommended by Axel.
-	*/
+	/* Code from labs */
 
 	SYSKEY = 0xAA996655;  /* Unlock OSCCON, step 1 */
 	SYSKEY = 0x556699AA;  /* Unlock OSCCON, step 2 */
@@ -111,11 +118,13 @@ int main(void) {
 	/* SPI2STAT bit SPIROV = 0; */
 	SPI2STATCLR = 0x40;
 	/* SPI2CON bit CKP = 1; */
-    SPI2CONSET = 0x40;
+  SPI2CONSET = 0x40;
 	/* SPI2CON bit MSTEN = 1; */
 	SPI2CONSET = 0x20;
 	/* SPI2CON bit ON = 1; */
 	SPI2CONSET = 0x8000;
+
+	/* Own written code */
 
 	/* Initiate timer */
 	TMR2 = 0;
@@ -128,6 +137,9 @@ int main(void) {
 	while(1){
 
 		initGame();
+		while(!running){
+			renderStartScreen();
+		}
 
 		while(running){
 
