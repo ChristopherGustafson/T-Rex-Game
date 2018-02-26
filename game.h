@@ -10,17 +10,30 @@ void display_debug( volatile int * const addr );
 
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
+extern const uint8_t const dinoIm[8];
+extern const uint8_t const ground[6];
+extern const uint8_t const cactusIm[5];
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
-
-extern const uint8_t const dark[128];
-//extern const uint8_t const dino[128];
-extern const uint8_t const dot[1];
 
 typedef struct gameObject{
   int x;
   int y;
-  const int WIDTH;
-  const int HEIGHT;
-  const uint8_t image[];
+  int velX;
+  int velY;
+  int WIDTH;
+  int HEIGHT;
 } gameObject;
+
+/* Game variables */
+int running;
+int gameOver;
+int renderCount;
+
+struct gameObject dino;
+struct gameObject cactus;
+
+ /* Game functions */
+void initGame();
+void tick();
+void render();
