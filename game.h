@@ -14,10 +14,13 @@ extern const uint8_t const font[128*8];
 extern char textbuffer[4][16];
 
 extern const uint8_t const dark[128];
-extern const uint8_t const dino[128];
+//extern const uint8_t const dino[128];
 extern const uint8_t const dot[1];
 
 typedef struct gameObject{
   int x;
   int y;
+  const int WIDTH;
+  const int HEIGHT;
+  const uint8_t image[];
 } gameObject;
