@@ -8,6 +8,8 @@ uint8_t spi_send_recv(uint8_t data);
 char * itoaconv( int num );
 void display_debug( volatile int * const addr );
 
+#define BUTTON (PORTD >> 7)
+
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
 extern const uint8_t const dinoIm[8];
@@ -34,6 +36,8 @@ int renderCount;
 struct gameObject dino;
 struct gameObject cactus;
 struct gameObject bird;
+
+int jumping;
 
  /* Game functions */
 void initGame();

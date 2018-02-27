@@ -11,7 +11,7 @@ void render(void){
 		for(col = 0; col < 128; col++){
 
 			//Draw dino
-			if(page == 2 && col == dino.x){
+			if(page == 2 && col == dino.x && dino.y == 0){
 				for(t = 0; t < 8; t++){
 					spi_send_recv(dinoIm[t]);
 				}

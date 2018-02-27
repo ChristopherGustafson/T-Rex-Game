@@ -2,10 +2,6 @@
 #include <pic32mx.h>
 #include "game.h"
 
-void checkButtons(){
-
-}
-
 void initGame(void){
     dino.x = 20;
     dino.y = 0;
@@ -36,6 +32,22 @@ void checkCollision(void){
 
 void updateDino(){
 
+  //Jump
+  if(BUTTON && !jumping){
+    dino.velY = 4;
+    dino.y += dino.velY;
+    jumping = 1;
+  }
+  else if(dino.y <= 0){
+    jumping = 0;
+    dino.y = 0;
+    dino.velY = 0;
+  }
+  else{
+    dino.y += dino.velY;
+    dino.velY--;
+  }
+
 }
 
 void updateObstacles(){
@@ -56,7 +68,6 @@ void updateObstacles(){
 }
 
 void tick(void){
-  checkButtons();
   updateDino();
   updateObstacles();
   checkCollision();
