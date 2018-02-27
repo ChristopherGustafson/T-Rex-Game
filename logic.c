@@ -15,6 +15,10 @@ void initGame(void){
     cactus.y = 0;
     cactus.WIDTH = 5;
 
+    bird.x = 80;
+    bird.y = 16;
+    bird.WIDTH = 5;
+
     running = 1;
 }
 
@@ -32,22 +36,23 @@ void checkCollision(void){
 
 void updateDino(){
 
-    
-
-
-
-  dino.y += dino.velY;
-
-
 }
 
 void updateObstacles(){
+
+  //Update cactus pos
   if(cactus.x > 0){
     cactus.x--;
   }
-  else
+  else{
     cactus.x = 120;
-
+  }
+  //Update bird pos
+  if(bird.x > 0){
+    bird.x--;
+  }else{
+    bird.x = 90;
+  }
 }
 
 void tick(void){

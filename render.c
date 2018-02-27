@@ -26,6 +26,14 @@ void render(void){
 				col += 4;
 			}
 
+			//Draw bird
+			else if(page == 0 && col == bird.x){
+				for(t = 0; t < bird.WIDTH; t++){
+					spi_send_recv(birdIm[t]);
+				}
+				col += 4;
+			}
+
       /*
 			// Draw ground
 			else if(page == 3){
