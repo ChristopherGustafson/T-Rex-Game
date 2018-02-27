@@ -67,7 +67,7 @@ int main(void) {
 	/* Initiate timer */
 	TMR2 = 0;
 	T2CON |= (0x7 << 4);
-	PR2 = 31250;
+	PR2 = 3125;
 	T2CON |= 0x8000;
 
 	display_init();
@@ -87,7 +87,7 @@ int main(void) {
 					render();
 			}
 		}
-		
+
 		while(gameOver){
 			gameOverScreen();
 		}

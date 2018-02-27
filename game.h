@@ -13,8 +13,12 @@ void display_debug( volatile int * const addr );
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
 extern const uint8_t const dinoIm[8];
+extern const uint8_t const dinoHead[8];
+extern const uint8_t const dinoBody[8];
 extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
+extern const uint8_t const cactus2[8  ];
+
 extern const uint8_t const birdIm[5];
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
@@ -38,7 +42,6 @@ struct gameObject cactus;
 struct gameObject bird;
 
 int jumping;
-
  /* Game functions */
 void initGame();
 void tick();

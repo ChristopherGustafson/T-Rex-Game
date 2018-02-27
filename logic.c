@@ -9,7 +9,7 @@ void initGame(void){
 
     cactus.x = 120;
     cactus.y = 0;
-    cactus.WIDTH = 5;
+    cactus.WIDTH = 8;
 
     bird.x = 80;
     bird.y = 16;
