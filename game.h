@@ -19,6 +19,7 @@ extern const uint8_t const dinoHead[8];
 extern const uint8_t const dinoBody[8];
 extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
+extern const uint8_t const birdIm[5];
 extern const uint8_t const cactus2[8];
 
 extern const uint8_t const birdIm[5];

@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include <pic32mx.h>
 #include "game.h"
+#include "standard.h"
 
 void delay(int a){
 	int i;
 	for(i = 0; i < a; i++){
 	}
 }
-/*
-struct gameObject dino = {0, 0, 8, 8};
-struct gameObject cactus = {0, 0, 5, 8};
-*/
 
 void startScreen(void){
 	running = 1;
@@ -71,6 +68,7 @@ int main(void) {
 	T2CON |= 0x8000;
 
 	display_init();
+	int rcount = 0;
 
 	while(1){
 
@@ -85,6 +83,10 @@ int main(void) {
 				IFS(0) = 0;
 				tick();
 				render();
+
+				if(BUTTON1){
+
+				}
 			}
 		}
 

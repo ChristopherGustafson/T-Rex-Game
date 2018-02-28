@@ -16,7 +16,7 @@ void initGame(void){
     cactus.HEIGHT = 8;
 
     bird.x = 80;
-    bird.y = 16;
+    bird.y = 20;
     bird.WIDTH = 5;
     bird.HEIGHT = 4;
 
