@@ -106,18 +106,15 @@ void render(void){
 				case 2:
 
 					if(dino.x == col){
-						if(cactus.x == col){
-							for(t = 0; t < dino.WIDTH; t++){
-								spi_send_recv(dinoBody[t]>>dino.y);
-							}
-						}
-						else{
 							for(t = 0; t < dino.WIDTH; t++){
 								spi_send_recv(dinoBody[t]>>dino.y);
 							}
 						}
 						col += (dino.WIDTH-1);
 					}
+
+
+
 					else if(cactus.x == col){
 						for(t = 0; t < cactus.WIDTH; t++){
 							spi_send_recv(cactus2[t]);

@@ -2,6 +2,8 @@
 #include <pic32mx.h>
 #include "game.h"
 
+int jumpCount;
+
 void initGame(void){
     dino.x = 20;
     dino.y = 0;
@@ -16,6 +18,8 @@ void initGame(void){
     bird.WIDTH = 5;
 
     running = 1;
+
+    jumpCount = 0;
 }
 
 void checkCollision(void){
@@ -31,22 +35,36 @@ void checkCollision(void){
 }
 
 void updateDino(){
-
   //Jump
-  if(BUTTON && !jumping){
+  if(BUTTON1 && !jumping){
+    jumping = 1;
     dino.velY = 4;
     dino.y += dino.velY;
-    jumping = 1;
   }
-  else if(dino.y <= 0){
-    jumping = 0;
-    dino.y = 0;
-    dino.velY = 0;
+  else if(jumping){
+    if(jumpCount){
+      dino.y += dino.velY;
+      dino.velY--;
+      jumpCount = 0;
+    }
+    else{
+      jumpCount = 1;
+    }
+
+    if(dino.y <= 0){
+      jumping = 0;
+      dino.y = 0;
+      dino.velY = 0;
+    }
   }
-  else{
-    dino.y += dino.velY;
-    dino.velY--;
+
+
+  if(BUTTON2){
+    
   }
+
+
+
 
 }
 

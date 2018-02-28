@@ -8,7 +8,9 @@ uint8_t spi_send_recv(uint8_t data);
 char * itoaconv( int num );
 void display_debug( volatile int * const addr );
 
-#define BUTTON (PORTD >> 7)
+#define BUTTON1 (PORTD >> 7)
+#define BUTTON2 (PORTD >> 6)
+#define BUTTON3 (PORTD >> 5)
 
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
@@ -17,7 +19,7 @@ extern const uint8_t const dinoHead[8];
 extern const uint8_t const dinoBody[8];
 extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
-extern const uint8_t const cactus2[8  ];
+extern const uint8_t const cactus2[8];
 
 extern const uint8_t const birdIm[5];
 /* Declare text buffer for display output */
