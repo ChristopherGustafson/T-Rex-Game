@@ -109,7 +109,7 @@ void render(void){
 							for(t = 0; t < dino.WIDTH; t++){
 								spi_send_recv(dinoBody[t]>>dino.y);
 							}
-						}
+
 						col += (dino.WIDTH-1);
 					}
 

@@ -83,8 +83,8 @@ int main(void) {
 		while(running){
 			if(IFS(0)){
 				IFS(0) = 0;
-					tick();
-					render();
+				tick();
+				render();
 			}
 		}
 
