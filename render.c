@@ -18,7 +18,7 @@ void render(void){
 						for(t = 0; t < dino.WIDTH; t++){
 
 							//If bird.x = col during dino render, render both
-							if(bird.x == col){
+							if(bird.x == col && bird.y == 20){
 								for(i = 0; i < bird.WIDTH; i++){
 									if(dino.y >= 8){
 										spi_send_recv( (dinoHead[t]>>(dino.y-8)) | (dinoBody[t] << (16-dino.y)) | birdIm[i] );
@@ -44,7 +44,7 @@ void render(void){
 						col--;
 					}
 
-					else if(bird.x == col){
+					else if(bird.x == col && bird.y == 20){
 						for(t = 0; t < bird.WIDTH; t++){
 							spi_send_recv(birdIm[t]);
 						}
@@ -60,15 +60,40 @@ void render(void){
 
 					if(dino.x == col){
 						for(t = 0; t < dino.WIDTH; t++){
-							if(dino.y <= 8){
-								spi_send_recv( (dinoHead[t]>>dino.y) | (dinoBody[t] << (8-dino.y)) );
+
+							if(bird.x == col && bird.y == 12){
+								for(i = 0; i < bird.WIDTH; i++){
+									spi_send_recv(birdIm[i]);
+									t++;
+								}
+								col += bird.WIDTH-1;
 							}
 							else{
-								spi_send_recv( dinoBody[t] >> (dino.y-8));
+								if(dino.y <= 8){
+									if(!ducking){
+										spi_send_recv( (dinoHead[t]>>dino.y) | (dinoBody[t] << (8-dino.y)) );
+									}
+									else{
+										spi_send_recv(0x00);
+									}
+								}
+								else{
+									spi_send_recv( dinoBody[t] >> (dino.y-8));
+								}
 							}
+							col++;
 						}
-						col += (dino.WIDTH-1);
+						col--;
 					}
+
+
+					else if(bird.x == col && bird.y == 12){
+						for(t = 0; t < bird.WIDTH; t++){
+							spi_send_recv(birdIm[t]);
+						}
+						col += bird.WIDTH-1;
+					}
+
 					else{
 						spi_send_recv(0x00);
 					}
@@ -77,28 +102,42 @@ void render(void){
 				case 2:
 
 					if(dino.x == col){
-							for(t = 0; t < dino.WIDTH; t++){
 
-								/* If cactus.x is reached during render of dino, render cactus
-								and dino. */
-								if(cactus.x == col){
-									for(i = 0; i < cactus.WIDTH; i++){
-										spi_send_recv(dinoBody[t]>>dino.y | cactusIm[i]);
-										t++;
-									}
-									col += (cactus.WIDTH -1);
+							//If dino is ducking, render ducking image
+							if(ducking){
+								for(t = 0; t < dino.WIDTH; t++){
+									spi_send_recv(dinoDuck[t]);
 								}
-								else{
-									spi_send_recv(dinoBody[t]>>dino.y);
-								}
-								col++;
+								col += (dino.WIDTH-1);
 							}
-							col--;
 
+							else{
+								for(t = 0; t < dino.WIDTH; t++){
 
+									/* If cactus.x is reached during render of dino, render cactus
+									and dino. */
+									if(cactus.x == col){
+										for(i = 0; i < cactus.WIDTH; i++){
+											spi_send_recv(dinoBody[t]>>dino.y | cactusIm[i]);
+											t++;
+										}
+										col += (cactus.WIDTH -1);
+									}
+									else if(bird.x == col && bird.y == 4){
+										for(i = 0; i < bird.WIDTH; i++){
+											spi_send_recv(dinoBody[t]>>dino.y | birdIm[i]);
+											t++;
+										}
+										col += (bird.WIDTH -1);
+									}
+									else{
+										spi_send_recv(dinoBody[t]>>dino.y);
+									}
+									col++;
+								}
+								col--;
+							}
 					}
-
-
 
 					else if(cactus.x == col){
 						for(t = 0; t < cactus.WIDTH; t++){
@@ -106,6 +145,14 @@ void render(void){
 						}
 						col += cactus.WIDTH-1;
 					}
+
+					else if(bird.x == col && bird.y == 4){
+						for(t = 0; t < bird.WIDTH; t++){
+							spi_send_recv(birdIm[t]);
+						}
+						col += bird.WIDTH-1;
+					}
+
 					else{
 						spi_send_recv(0x00);
 					}

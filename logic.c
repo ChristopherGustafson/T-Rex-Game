@@ -5,6 +5,8 @@
 int jumpCount;
 
 void initGame(void){
+    running = 1;
+
     dino.x = 20;
     dino.y = 0;
     dino.WIDTH = 8;
@@ -16,11 +18,12 @@ void initGame(void){
     cactus.HEIGHT = 8;
 
     bird.x = 80;
-    bird.y = 20;
+    bird.y = 12;
     bird.WIDTH = 5;
     bird.HEIGHT = 4;
 
-    running = 1;
+    jumping = 0;
+    ducking = 0;
 
     jumpCount = 0;
 }
@@ -37,8 +40,9 @@ void checkCollision(void){
 	}
 
   //Check collision with bird
-  if((bird.y+2) < (dino.y+dino.HEIGHT) && (bird.y+2) > bird.y){
-    if(bird.x > dino.x && bird.x < dino.x+dino.WIDTH){
+  if((bird.y) <= (dino.y+dino.HEIGHT) && (bird.y) >= dino.y){
+    if(bird.x > dino.x && bird.x < dino.x+dino.WIDTH |
+      (bird.x+bird.WIDTH > dino.x && bird.x+bird.WIDTH < dino.x+dino.WIDTH)){
       running = 0;
       gameOver = 1;
     }
@@ -47,7 +51,7 @@ void checkCollision(void){
 
 void updateDino(){
   //Jump
-  if(BUTTON1 && !jumping){
+  if(BUTTON1 && !jumping && !ducking){
     jumping = 1;
     dino.velY = 4;
     dino.y += dino.velY;
@@ -70,12 +74,16 @@ void updateDino(){
   }
 
 
-  if(BUTTON2){
-
+  if(BUTTON2 && !ducking && dino.y == 0){
+    ducking = 1;
+    dino.HEIGHT = 8;
+    dino.WIDTH = 12;
   }
-
-
-
+  else if(!BUTTON2 && ducking && dino.y == 0){
+    ducking = 0;
+    dino.HEIGHT = 12;
+    dino.WIDTH = 8;
+  }
 
 }
 
@@ -92,7 +100,7 @@ void updateObstacles(){
   if(bird.x > 0){
     bird.x--;
   }else{
-    bird.x = 90;
+    bird.x = 120;
   }
 }
 

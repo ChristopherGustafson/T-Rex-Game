@@ -17,6 +17,7 @@ extern const uint8_t const font[128*8];
 extern const uint8_t const dinoIm[8];
 extern const uint8_t const dinoHead[8];
 extern const uint8_t const dinoBody[8];
+extern const uint8_t const dinoDuck[12];
 extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
 extern const uint8_t const birdIm[5];
@@ -45,6 +46,7 @@ struct gameObject cactus;
 struct gameObject bird;
 
 int jumping;
+int ducking;
  /* Game functions */
 void initGame();
 void tick();
