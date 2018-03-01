@@ -1,8 +1,9 @@
+//#include <stdio.h> Tog bort för att få rand att fungera
 #include <stdint.h>
 #include <stdlib.h>
 #include <pic32mx.h>
 #include "game.h"
-
+#include "standard.h"
 
 void delay(int a){
 	int i;
@@ -20,14 +21,28 @@ int hopp;
 int cactusX;
 int jump;
 int fall;
+int col0;
 int col1;
 int col2;
 int cac;
+int belowDino;
+int dinocac;
+int h;
+int height;
+int btnPressed;
+int t;
 uint8_t mini[] = {0x08, 0x30, 0x20, 0xf0, 0xb8, 0x1c, 0x0f, 0x13};
 uint8_t ground[] = {0x05, 0x05, 0x09, 0x01, 0x09, 0x05};
 uint8_t cactus[] = {0x1c, 0x10, 0xfc, 0x10, 0x1c};
 void initGame(void){
+	t = 0;
+	btnPressed = 0;
+	height = 15;
+	h = 0;
+	dinocac = 0;
+	belowDino = 0;
 	cac = 0;
+	col0 = 0;
 	col1 = 0;
 	col2 = 0;
 	fall = 0;
@@ -52,27 +67,73 @@ void render(void){
 	for(page = 0; page < 4; page++){
 		for(col = 0; col < 128; col++){
 
+
+			if(btnPressed == 0)
+			{
+				t++;
+				if(t == 32000)
+				{
+					t = 0;
+				}
+			}
+			if(btnPressed == 1)
+			{
+				srand((unsigned) t);
+			}
+
+
 			//Draw dino
 			if((page == 2) && (col == dinoX) && (!jump))
 			{
 				for(t = 0; t < 8; t++)
 				{
-					spi_send_recv(mini[t]);
+					/*
+					if(((t + cactusX) < (dinoX + 7)) && ((t + cactusX) > dinoX))
+					{
+							spi_send_recv(cactus[h] | mini[t]);
+							h++;
+					}
+					else
+					*/
+
+
+						spi_send_recv(mini[t]);
 				}
+				h = 0;
+				//Problem... Skips 7 columns when dino and cactus touch which
+				//means cactus will not be printed since col jumps over cactusX
 				col += 7;
 			}
 
 			//Make dino jump
-			else if(((PORTD >> 7) || jump) && (page == 1) && (col == dinoX))
+			else if(((PORTD >> 7) || jump) && (page == 0) && (col == dinoX))
+			{
+				btnPressed = 1;
+				delay(1000);
+				jump = 1;
+				//dino written to page 0
+				if(dinoY > 7)
+				{
+					for(col0 = 0; col0 < 8; col0++)
+					{
+						spi_send_recv(mini[col0] << (height - dinoY));
+					}
+				}
+				col += 7;
+			}
+
+			else if(/*((PORTD >> 7) ||*/ (jump) && (page == 1) && (col == dinoX))
 			{
 				delay(1000);
 				//Stops standard printing of dino
-				jump = 1;
+				//jump = 1; //Gammalt
 
 				//Dino written to first page
+				if(dinoY > 0 && dinoY < 8)
 				for(col1 = 0; col1 < 8; col1++)
 				{
-					spi_send_recv(mini[col1] << (7 - dinoY));
+					// Skitandet i bitar är fel här
+					spi_send_recv(mini[col1] << (height - dinoY - 7));
 				}
 				col += 7;
 			}
@@ -87,7 +148,7 @@ void render(void){
 					}
 					col += 7;
 					//Max height reached, tell dino to start falling
-					if(dinoY == 7)
+					if(dinoY == height)
 					{
 						fall = 1;
 					}
@@ -108,25 +169,23 @@ void render(void){
 						fall = 0;
 					}
 				}
-				/*
-			else if(page == 2)
+			//draw cactus
+			/*
+			else if((page == 2) && (col == cactusX))
 			{
-				if(col < renderCount+5 && col > renderCount-5)
 				for(cac = 0; cac < 5; cac++)
 				{
-										spi_send_recv(cactus);
+					if(((cactusX + cac) > dinoX) || (cactusX + cac) < dinoX)
+					spi_send_recv(cactus[cac]);
 				}
-
-				else if(col < renderCount+40 && col > renderCount+35)
-					spi_send_recv(0x19);
-				else
-					spi_send_recv(0x1);
+				col += 4;
 			}
 			*/
+
 			// Draw ground
 			else if(page == 3)
 			{
-				delay(500);
+				delay(2000);
 				if(col < renderCount+5 && col > renderCount-5)
 					spi_send_recv(0x25);
 				else if(col < renderCount+40 && col > renderCount+35)
@@ -146,11 +205,33 @@ void render(void){
 
 		}
 	}
+	//cactusX värde
+	/*
+	if(cactusX == -4)
+	{
+		cactusX = 125;
+	}
+	else if(cactusX == dinoX+8)
+	{
+		belowDino = 1;
+	}
+	else if(cactusX == dinoX-5)
+	{
+		belowDino = 0;
+	}
+		cactusX--;
+		*/
 
+
+		//rendercount värde
 	if(renderCount == -40)
+	{
 		renderCount = 127;
+	}
 	else
+	{
 		renderCount--;
+	}
 
 
 

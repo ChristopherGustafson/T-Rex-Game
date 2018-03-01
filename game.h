@@ -7,6 +7,8 @@ void display_update(void);
 uint8_t spi_send_recv(uint8_t data);
 char * itoaconv( int num );
 
+
+
 /* Declare display_debug - a function to help debugging.
 
    After calling display_debug,

@@ -7,7 +7,7 @@ main.c.o: main.c \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h \
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h \
- game.h
+ game.h standard.h
 main.c :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
@@ -17,4 +17,4 @@ main.c :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stddef.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h :
  /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h :
- game.h :
+ game.h standard.h :
