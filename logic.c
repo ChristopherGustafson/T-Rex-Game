@@ -12,13 +12,13 @@ void initGame(void){
     dino.WIDTH = 8;
     dino.HEIGHT = 12;
 
-    cactus.x = 120;
+    cactus.x = 60;
     cactus.y = 0;
     cactus.WIDTH = 5;
     cactus.HEIGHT = 8;
 
-    bird.x = 80;
-    bird.y = 12;
+    bird.x = 120;
+    bird.y = 20;
     bird.WIDTH = 5;
     bird.HEIGHT = 4;
 
@@ -94,14 +94,27 @@ void updateObstacles(){
     cactus.x--;
   }
   else{
-    cactus.x = 120;
+    cactus.x = 122;
   }
   //Update bird pos
   if(bird.x > 0){
     bird.x--;
   }else{
-    bird.x = 120;
-  }
+    bird.x = 122;
+
+    switch(rand()%3){
+      case 0:
+        bird.y = 20;
+        break;
+      case 1:
+        bird.y = 12;
+        break;
+      case 2:
+        bird.y = 4;
+        break;
+      }
+    }
+
 }
 
 void tick(void){

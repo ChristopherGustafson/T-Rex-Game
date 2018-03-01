@@ -11,6 +11,11 @@ void delay(int a){
 }
 
 void startScreen(void){
+	r = 0;
+	while(!BUTTON1){
+		renderStartScreen();
+		r++;
+	}
 	running = 1;
 }
 void gameOverScreen(void){
@@ -64,25 +69,31 @@ int main(void) {
 	/* Initiate timer */
 	TMR2 = 0;
 	T2CON |= (0x6 << 4);
-	PR2 = 31250;
+	int gameTime = 31250;
+	PR2 = gameTime;
 	T2CON |= 0x8000;
 
 	display_init();
-	int rcount = 0;
+
+
 
 	while(1){
 
-		while(!running){
-			startScreen();
-		}
+		startScreen();
+
+		srand((unsigned) r);
 
 		initGame();
+		gameTime = 31250;
+		PR2 = gameTime;
 
 		while(running){
 			if(IFS(0)){
 				IFS(0) = 0;
 				tick();
 				render();
+				gameTime -= 5;
+				PR2 = gameTime;
 
 				if(BUTTON1){
 

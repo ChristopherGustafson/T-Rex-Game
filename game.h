@@ -8,9 +8,9 @@ uint8_t spi_send_recv(uint8_t data);
 char * itoaconv( int num );
 void display_debug( volatile int * const addr );
 
-#define BUTTON1 (PORTD >> 7)
-#define BUTTON2 (PORTD >> 6)
-#define BUTTON3 (PORTD >> 5)
+#define BUTTON1 ((PORTD >> 7) & 0x1)
+#define BUTTON2 ((PORTD >> 6) & 0x1)
+#define BUTTON3 ((PORTD >> 5) & 0x1)
 
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
@@ -40,6 +40,7 @@ typedef struct gameObject{
 int running;
 int gameOver;
 int renderCount;
+int r;
 
 struct gameObject dino;
 struct gameObject cactus;

@@ -142,6 +142,9 @@ void render(void){
 					else if(cactus.x == col){
 						for(t = 0; t < cactus.WIDTH; t++){
 							spi_send_recv(cactusIm[t]);
+							if(col == 127){
+								break;
+							}
 						}
 						col += cactus.WIDTH-1;
 					}
@@ -168,4 +171,10 @@ void render(void){
 
 		}
 	}
+}
+
+void renderStartScreen(void){
+
+	//Render start screen
+
 }
