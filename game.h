@@ -22,6 +22,8 @@ extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
 extern const uint8_t const birdIm[5];
 extern const uint8_t const cactus2[8];
+extern const uint8_t const start[35];
+extern const uint8_t const game[43];
 
 extern const uint8_t const birdIm[5];
 /* Declare text buffer for display output */
@@ -41,6 +43,7 @@ int running;
 int gameOver;
 int renderCount;
 int r;
+int score;
 
 struct gameObject dino;
 struct gameObject cactus;

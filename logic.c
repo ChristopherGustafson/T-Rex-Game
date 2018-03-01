@@ -3,9 +3,11 @@
 #include "game.h"
 
 int jumpCount;
+volatile int* LEDwrite = (volatile int*) 0xbf886110;
 
 void initGame(void){
     running = 1;
+    score = 0;
 
     dino.x = 20;
     dino.y = 0;
@@ -24,8 +26,9 @@ void initGame(void){
 
     jumping = 0;
     ducking = 0;
-
     jumpCount = 0;
+
+    *LEDwrite = 0;
 }
 
 void checkCollision(void){
@@ -121,4 +124,11 @@ void tick(void){
   updateDino();
   updateObstacles();
   checkCollision();
+
+
+  if(cactus.x == dino.x){
+    score++;
+    *LEDwrite += 1;
+  }
+
 }
