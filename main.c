@@ -126,11 +126,7 @@ void startScreen(void){
 
 void gameOverScreen(void){
 	delay(1000000);
-	int high = readFrom();
-	if(score > high){
-		writeTo(score);
-	}
-	scoreToArray(readFrom());
+
 	while(!BUTTON1){
 		renderEndScreen();
 	}
@@ -222,9 +218,9 @@ int main(void) {
 			}
 		}
 
+		calculateHighscore();
+
 		while(gameOver){
-			int abc = 5;
-			writeTo(abc);
 			gameOverScreen();
 		}
 

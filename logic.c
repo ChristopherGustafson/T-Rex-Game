@@ -143,6 +143,39 @@ void scoreToArray(int a){
   *highscore = *ret;
 }
 
+void calculateHighscore(void){
+
+  int n, i, high;
+
+  if(score > readFrom()){
+    writeTo(score);
+    high = score;
+  }
+  else{
+    high = readFrom();
+  }
+
+  //Check how many digits score consits of
+  if(high < 10){
+    n = 1;
+  }
+  else if(high < 100){
+    n = 2;
+  }
+  else{
+    n = 3;
+  }
+
+  int temp[n];
+
+  for(i = 0; i < n; i++){
+    temp[i] = high % 10;
+    high /= 10;
+  }
+
+  highscore = &temp;
+}
+
 void tick(void){
   updateDino();
   updateObstacles();

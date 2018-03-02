@@ -18,9 +18,9 @@ extern const uint8_t const cactusIm[5];
 extern const uint8_t const birdIm[5];
 extern const uint8_t const start[35];
 extern const uint8_t const game[43];
-extern const uint8_t const numbers[38];
-extern const uint8_t const birdIm[5];
-extern const uint8_t const s[25];
+extern const uint8_t const numbers[39];
+extern const uint8_t const highscoreText[47];
+
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
 
