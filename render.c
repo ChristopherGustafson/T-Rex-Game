@@ -233,22 +233,25 @@ void renderEndScreen(void){
 
 					case 1:
 
-						if(col == 40){
+						if(col == 40)
+						{
 
-							for(t = 0; t < 46; t++){
+							for(t = 0; t < 46; t++)
+							{
 								spi_send_recv(highscoreText[t]);
 							}
 							col += 45;
 
-							for(t = 0; t < sizeof(highscore)/sizeof(highscore[0]); t++){
-								for(i = 0; i < 4; i++){
+							for(t = 0; t < (sizeof(highscore)/sizeof(highscore[0])); t++){
+								for(i = 0; i < 4; i++)
+								{
 									spi_send_recv(numbers[highscore[t]*4 + i]);
 								}
 								spi_send_recv(0x00);
 							}
-							col += (sizeof(highscore)/sizeof(highscore[0])*5)-1;
+							col += (((sizeof(highscore) / sizeof(highscore[0]))*5) - 1);
 						}
-						else 
+						else
 						spi_send_recv(0x0);
 						break;
 
