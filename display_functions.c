@@ -46,6 +46,7 @@ void quicksleep(int cyc) {
    repeated calls to display_image; display_image overwrites
    about half of the digits shown by display_debug.
 */
+/*
 void display_debug( volatile int * const addr )
 {
   display_string( 1, "Addr" );
@@ -54,6 +55,7 @@ void display_debug( volatile int * const addr )
   num32asc( &textbuffer[2][6], *addr );
   display_update();
 }
+*/
 
 uint8_t spi_send_recv(uint8_t data) {
 	while(!(SPI2STAT & 0x08));

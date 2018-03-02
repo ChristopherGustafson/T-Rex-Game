@@ -5,8 +5,8 @@
 
 void render(void){
 
-	int page, col, t, i;
 
+	int page, col, t, i;
 	for(page = 0; page < 4; page++){
 		for(col = 0; col < 128; col++){
 
@@ -214,6 +214,8 @@ void renderEndScreen(void){
 
 		int nmrs[] = {1,2,3,5};
 		int a, b;
+		int c = readFrom();
+		int q;
 
 		int page, col, t, i;
 
@@ -394,8 +396,7 @@ void renderEndScreen(void){
 						break;
 
 					case 3:
-
-						spi_send_recv(0x01);
+							spi_send_recv(0x01);
 						break;
 
 

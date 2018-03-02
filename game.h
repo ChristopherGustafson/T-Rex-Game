@@ -2,11 +2,9 @@
 void display();
 void display_image(int x, const uint8_t *data);
 void display_init(void);
-void display_string(int line, char *s);
-void display_update(void);
 uint8_t spi_send_recv(uint8_t data);
 char * itoaconv( int num );
-void display_debug( volatile int * const addr );
+
 
 #define BUTTON1 ((PORTD >> 7) & 0x1)
 #define BUTTON2 ((PORTD >> 6) & 0x1)
