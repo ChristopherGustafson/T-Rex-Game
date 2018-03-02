@@ -223,8 +223,6 @@ int main(void) {
 		}
 
 		while(gameOver){
-			int abc = 5;
-			writeTo(abc);
 			gameOverScreen();
 		}
 
