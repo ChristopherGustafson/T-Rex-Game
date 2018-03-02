@@ -227,7 +227,8 @@ void renderEndScreen(void){
 							}
 							col += 42;
 						}
-
+						else
+						spi_send_recv(0x0);
 						break;
 
 					case 1:
@@ -247,7 +248,8 @@ void renderEndScreen(void){
 							}
 							col += (sizeof(highscore)/sizeof(highscore[0])*5)-1;
 						}
-
+						else 
+						spi_send_recv(0x0);
 						break;
 
 					case 2:
