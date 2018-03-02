@@ -396,57 +396,6 @@ void renderEndScreen(void){
 						break;
 
 					case 3:
-					if(col == 50)
-					{
-						for(q = 0; q < 4; q++)
-						{
-							switch (c)
-							{
-								case 0:
-									spi_send_recv(numbers[q]);
-									col += 5;
-									break;
-								case 1:
-									spi_send_recv(numbers[q+4]);
-									col += 5;
-									break;
-								case 2:
-									spi_send_recv(numbers[q+8]);
-									col += 5;
-									break;
-								case 3:
-									spi_send_recv(numbers[q+12]);
-									col += 5;
-									break;
-								case 4:
-									spi_send_recv(numbers[q+16]);
-									col += 5;
-									break;
-								case 5:
-									spi_send_recv(numbers[q+20]);
-									col += 5;
-									break;
-								case 6:
-									spi_send_recv(numbers[q+24]);
-									col += 5;
-									break;
-								case 7:
-									spi_send_recv(numbers[q+28]);
-									col += 5;
-									break;
-								case 8:
-									spi_send_recv(numbers[q+32]);
-									col += 5;
-									break;
-								case 9:
-									spi_send_recv(numbers[q+36]);
-									col += 5;
-									break;
-								}
-
-							}
-						}
-						else
 							spi_send_recv(0x01);
 						break;
 
