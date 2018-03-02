@@ -120,6 +120,29 @@ void updateObstacles(){
 
 }
 
+void scoreToArray(int a){
+
+  int n, i;
+  if(a < 10){
+    n = 1;
+  }
+  else if(a < 100){
+    n = 2;
+  }
+  else{
+    n = 3;
+  }
+
+  int ret[3];
+
+  for(i = 0; i < n; i++){
+    ret[i] = a % 10;
+    a /= 10;
+  }
+
+  *highscore = *ret;
+}
+
 void tick(void){
   updateDino();
   updateObstacles();

@@ -212,7 +212,6 @@ void renderStartScreen(void){
 
 void renderEndScreen(void){
 
-		int nmrs[] = {1,2,3,5};
 		int a, b;
 		int c = readFrom();
 		int q;
@@ -307,15 +306,13 @@ void renderEndScreen(void){
 
 						else if(col == 40){
 
-							for(a = 0; a < sizeof(nmrs)/sizeof(nmrs[0]); a++){
+							for(a = 0; a < sizeof(highscore)/sizeof(highscore[0]); a++){
 								for(b = 0; b < 4; b++){
-									spi_send_recv(numbers[nmrs[a]*4 + b]);
+									spi_send_recv(numbers[highscore[a]*4 + b]);
 								}
 								spi_send_recv(0x00);
 							}
-							col += (sizeof(nmrs)/sizeof(nmrs[0])*5)-1;
-
-
+							col += (sizeof(highscore)/sizeof(highscore[0])*5)-1;
 						}
 
 

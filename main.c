@@ -123,8 +123,14 @@ void startScreen(void){
 	}
 	running = 1;
 }
+
 void gameOverScreen(void){
 	delay(1000000);
+	int high = readFrom();
+	if(score > high){
+		writeTo(score);
+	}
+	scoreToArray(readFrom());
 	while(!BUTTON1){
 		renderEndScreen();
 	}
