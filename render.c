@@ -212,6 +212,9 @@ void renderStartScreen(void){
 
 void renderEndScreen(void){
 
+		int nmrs[] = {1,2,3,5};
+		int a, b;
+
 		int page, col, t, i;
 
 		for(page = 0; page < 4; page++){
@@ -298,6 +301,22 @@ void renderEndScreen(void){
 							}
 							col--;
 						}
+
+
+						else if(col == 40){
+
+							for(a = 0; a < sizeof(nmrs)/sizeof(nmrs[0]); a++){
+								for(b = 0; b < 4; b++){
+									spi_send_recv(numbers[nmrs[a]*4 + b]);
+								}
+								spi_send_recv(0x00);
+							}
+							col += (sizeof(nmrs)/sizeof(nmrs[0])*5)-1;
+
+
+						}
+
+
 
 
 						else if(bird.x == col && bird.y == 12){
