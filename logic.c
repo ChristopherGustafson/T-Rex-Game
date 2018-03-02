@@ -133,7 +133,7 @@ void scoreToArray(int a){
     n = 3;
   }
 
-  int ret[3];
+  int ret[n];
 
   for(i = 0; i < n; i++){
     ret[i] = a % 10;

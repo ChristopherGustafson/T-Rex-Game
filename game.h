@@ -39,7 +39,7 @@ int gameOver;
 int renderCount;
 int r;
 int score;
-int highscore[3];
+int * highscore;
 
 struct gameObject dino;
 struct gameObject cactus;
