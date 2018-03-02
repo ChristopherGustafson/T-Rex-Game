@@ -13,15 +13,11 @@ void display_debug( volatile int * const addr );
 #define BUTTON3 ((PORTD >> 5) & 0x1)
 
 /* Declare bitmap array containing font */
-extern const uint8_t const font[128*8];
-extern const uint8_t const dinoIm[8];
 extern const uint8_t const dinoHead[8];
 extern const uint8_t const dinoBody[8];
 extern const uint8_t const dinoDuck[12];
-extern const uint8_t const ground[6];
 extern const uint8_t const cactusIm[5];
 extern const uint8_t const birdIm[5];
-extern const uint8_t const cactus2[8];
 extern const uint8_t const start[35];
 extern const uint8_t const game[43];
 extern const uint8_t const numbers[38];
