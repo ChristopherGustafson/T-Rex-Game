@@ -7,13 +7,24 @@ void render(void){
 
 
 	int page, col, t, i;
+
+	/*
+	 *	The display on the chipKit-board is divided into four horizontal
+	 *	pages and 128 vertical columns, the following for loop sends one
+	 *	hexadecimal number representing a 8-pixel high column to the display
+	 *	for every page and column.
+	 */
 	for(page = 0; page < 4; page++){
 		for(col = 0; col < 128; col++){
+
 
 			switch(page){
 
 				case 0:
 
+					/* If the dino has the same x-value as the current column we
+					render the dino, depending on the y-value of the dino we
+					also shift the dino to match the current vertical position  */
 					if(dino.x == col){
 						for(t = 0; t < dino.WIDTH; t++){
 
@@ -44,6 +55,7 @@ void render(void){
 						col--;
 					}
 
+					//If we pass the birds x-value and it has the correct y-value we print it
 					else if(bird.x == col && bird.y == 20){
 						for(t = 0; t < bird.WIDTH; t++){
 							spi_send_recv(birdIm[t]);
@@ -212,6 +224,9 @@ void renderStartScreen(void){
 
 void renderEndScreen(void){
 
+	/* Rendering the gameover-screen, renders a dino and the ground aswell
+	as the current highscore. */
+
 		int page, col, t, i;
 
 		for(page = 0; page < 4; page++){
@@ -227,32 +242,31 @@ void renderEndScreen(void){
 							}
 							col += 42;
 						}
-						else
-						spi_send_recv(0x0);
+						else{
+							spi_send_recv(0x00);
+						}
 						break;
 
 					case 1:
 
-						if(col == 40)
-						{
+						if(col == 40){
 
-							for(t = 0; t < 46; t++)
-							{
+							for(t = 0; t < 46; t++){
 								spi_send_recv(highscoreText[t]);
 							}
 							col += 45;
 
-							for(t = 0; t < (sizeof(highscore)/sizeof(highscore[0])); t++){
-								for(i = 0; i < 4; i++)
-								{
+							for(t = 0; t < sizeof(highscore)/sizeof(highscore[0]); t++){
+								for(i = 0; i < 4; i++){
 									spi_send_recv(numbers[highscore[t]*4 + i]);
 								}
 								spi_send_recv(0x00);
 							}
-							col += (((sizeof(highscore) / sizeof(highscore[0]))*5) - 1);
+							col += (sizeof(highscore)/sizeof(highscore[0])*5)-1;
 						}
-						else
-						spi_send_recv(0x0);
+						else{
+							spi_send_recv(0x00);
+						}
 						break;
 
 					case 2:

@@ -51,4 +51,6 @@ int ducking;
 void initGame();
 void tick();
 void render();
-int * toArray(int a);
+void calculateHighscore();
+void writeTo(int a);
+void readFrom();

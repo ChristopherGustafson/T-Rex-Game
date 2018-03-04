@@ -5,6 +5,10 @@
 int jumpCount;
 volatile int* LEDwrite = (volatile int*) 0xbf886110;
 
+/* Initiate the game by setting the position of all the objects to
+their original position and reseting the jump/duck variables of the
+dino */
+
 void initGame(void){
     running = 1;
     score = 0;
@@ -76,7 +80,7 @@ void updateDino(){
     }
   }
 
-
+  //If button2 is pressed, dino ducks
   if(BUTTON2 && !ducking && dino.y == 0){
     ducking = 1;
     dino.HEIGHT = 8;
@@ -92,19 +96,20 @@ void updateDino(){
 
 void updateObstacles(){
 
-  //Update cactus pos
+  //Update cactus pos, decrease x-position by 1
   if(cactus.x > 0){
     cactus.x--;
   }
   else{
     cactus.x = 122;
   }
-  //Update bird pos
+  //Update bird pos, decrease x-position by 1
   if(bird.x > 0){
     bird.x--;
   }else{
     bird.x = 122;
 
+    //Randomise the birds next y-position
     switch(rand()%3){
       case 0:
         bird.y = 20;
@@ -120,37 +125,17 @@ void updateObstacles(){
 
 }
 
-void scoreToArray(int a){
-
-  int n, i;
-  if(a < 10){
-    n = 1;
-  }
-  else if(a < 100){
-    n = 2;
-  }
-  else{
-    n = 3;
-  }
-
-  int ret[n];
-
-  for(i = 0; i < n; i++){
-    ret[i] = a % 10;
-    a /= 10;
-  }
-
-  *highscore = *ret;
-}
-
 void calculateHighscore(void){
 
   int n, i, high;
 
+  /* Compare current score to highscore, if score is higher we save that
+  value as the new highscore */
   if(score > readFrom()){
     writeTo(score);
     high = score;
   }
+  //Otherwise load the old highscore
   else{
     high = readFrom();
   }
@@ -168,11 +153,13 @@ void calculateHighscore(void){
 
   int temp[n];
 
+  //Divide the highscore into a array of its digits.
   for(i = 0; i < n; i++){
     temp[i] = high % 10;
     high /= 10;
   }
 
+  //Set the highscore-adress to our new highscore
   highscore = &temp;
 }
 
@@ -181,7 +168,8 @@ void tick(void){
   updateObstacles();
   checkCollision();
 
-
+  /* Everytime cactus is avoided the player increases his score by 1, the score
+  is then displayed using the leds on the chipKit */
   if(cactus.x == dino.x){
     score++;
     *LEDwrite += 1;
