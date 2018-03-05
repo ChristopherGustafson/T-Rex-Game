@@ -189,7 +189,20 @@ int main(void) {
 	/* Initiate timer */
 	TMR2 = 0;
 	T2CON |= (0x6 << 4);
-	int gameTime = 31250;
+	int gameTime;
+ 	if((PORTD >> 8) & 0x1)
+ 	{
+ 		gameTime = 30000;
+ 	}
+ 	else if((PORTD >> 9) & 0x1)
+ 	{
+ 		gameTime = 20000;
+ 	}
+ 	else if((PORTD >> 10) & 0x1)
+ 	{
+ 		gameTime = 10000;
+ 	}
+
 	PR2 = gameTime;
 	T2CON |= 0x8000;
 
@@ -206,7 +219,19 @@ int main(void) {
 		srand((unsigned) r);
 
 		initGame();
-		gameTime = 31250;
+		int gameTime;
+	 	if((PORTD >> 8) & 0x1)
+	 	{
+	 		gameTime = 30000;
+	 	}
+	 	else if((PORTD >> 9) & 0x1)
+	 	{
+	 		gameTime = 20000;
+	 	}
+	 	else if((PORTD >> 10) & 0x1)
+	 	{
+	 		gameTime = 10000;
+	 	}
 		PR2 = gameTime;
 
 		while(running){
