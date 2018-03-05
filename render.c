@@ -224,7 +224,26 @@ void renderStartScreen(void){
 
 void renderEndScreen(){
 
+		//Your score
 		int n, j;
+		if(score < 10){
+			n = 1;
+		}
+		else if(score < 100){
+			n = 2;
+		}
+		else{
+			n = 3;
+		}
+
+		int scores[n];
+		for(j = n-1; j >= 0; j--){
+			scores[j] = score % 10;
+			score /= 10;
+		}
+
+
+		//Highscore
 		if(currentHighscore < 10){
 			n = 1;
 		}
@@ -288,7 +307,28 @@ void renderEndScreen(){
 						break;
 
 					case 2:
-						spi_send_recv(0x00);
+						if(col == 20)
+						{
+							for(t = 0; t < 27; t++){
+								spi_send_recv(scoreText[t]);
+							}
+							col += 26;
+
+							for(t = 0; t < sizeof(scores)/sizeof(scores[0]); t++){
+								for(i = 0; i < 4; i++){
+									spi_send_recv(numbers[scores[t]*4 + i]);
+								}
+								spi_send_recv(0x00);
+							}
+							col += (sizeof(highs)/sizeof(highs[0]))*5;
+
+						}
+						else
+						{
+							spi_send_recv(0x00);
+
+						}
+
 						break;
 
 					case 3:

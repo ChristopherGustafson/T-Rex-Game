@@ -20,6 +20,7 @@ extern const uint8_t const start[35];
 extern const uint8_t const game[43];
 extern const uint8_t const numbers[39];
 extern const uint8_t const highscoreText[47];
+extern const uint8_t const scoreText[27];
 
 /* Declare text buffer for display output */
 extern char textbuffer[4][16];
