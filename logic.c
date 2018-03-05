@@ -5,6 +5,10 @@
 int jumpCount;
 volatile int* LEDwrite = (volatile int*) 0xbf886110;
 
+/* Initiate the game by setting the position of all the objects to
+their original position and reseting the jump/duck variables of the
+dino */
+
 void initGame(void){
     running = 1;
     score = 0;
@@ -76,7 +80,7 @@ void updateDino(){
     }
   }
 
-
+  //If button2 is pressed, dino ducks
   if(BUTTON2 && !ducking && dino.y == 0){
     ducking = 1;
     dino.HEIGHT = 8;
@@ -92,19 +96,20 @@ void updateDino(){
 
 void updateObstacles(){
 
-  //Update cactus pos
+  //Update cactus pos, decrease x-position by 1
   if(cactus.x > 0){
     cactus.x--;
   }
   else{
     cactus.x = 122;
   }
-  //Update bird pos
+  //Update bird pos, decrease x-position by 1
   if(bird.x > 0){
     bird.x--;
   }else{
     bird.x = 122;
 
+    //Randomise the birds next y-position
     switch(rand()%3){
       case 0:
         bird.y = 20;
@@ -125,10 +130,11 @@ void tick(void){
   updateObstacles();
   checkCollision();
 
-
+  /* Everytime cactus is avoided the player increases his score by 1, the score
+  is then displayed using the leds on the chipKit */
   if(cactus.x == dino.x){
     score++;
-    *LEDwrite += 1;
+    *LEDwrite = score;
   }
 
 }
