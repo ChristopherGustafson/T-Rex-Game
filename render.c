@@ -320,7 +320,7 @@ void renderEndScreen(){
 								}
 								spi_send_recv(0x00);
 							}
-							col += (sizeof(highs)/sizeof(highs[0]))*5;
+							col += (sizeof(scores)/sizeof(scores[0]))*5;
 
 						}
 						else

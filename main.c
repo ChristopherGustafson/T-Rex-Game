@@ -190,7 +190,7 @@ int main(void) {
 	TMR2 = 0;
 	T2CON |= (0x6 << 4);
 	int gameTime;
- 	if((PORTD >> 8) & 0x1)
+ 	if((PORTD >> 10) & 0x1)
  	{
  		gameTime = 30000;
  	}
@@ -198,7 +198,7 @@ int main(void) {
  	{
  		gameTime = 20000;
  	}
- 	else if((PORTD >> 10) & 0x1)
+ 	else if((PORTD >> 8) & 0x1)
  	{
  		gameTime = 10000;
  	}
@@ -220,7 +220,7 @@ int main(void) {
 
 		initGame();
 		int gameTime;
-	 	if((PORTD >> 8) & 0x1)
+	 	if((PORTD >> 10) & 0x1)
 	 	{
 	 		gameTime = 30000;
 	 	}
@@ -228,7 +228,7 @@ int main(void) {
 	 	{
 	 		gameTime = 20000;
 	 	}
-	 	else if((PORTD >> 10) & 0x1)
+	 	else if((PORTD >> 8) & 0x1)
 	 	{
 	 		gameTime = 10000;
 	 	}
